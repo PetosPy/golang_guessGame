@@ -15,6 +15,7 @@ func main() {
 	r := bufio.NewReader(os.Stdin)
 
 	var userNum int
+	stop := 10
 
 	// Prompt  the user to enter a number
 
@@ -22,7 +23,7 @@ func main() {
 	correctNum := rand.Intn(11)
 	fmt.Println("Enter a number between 1 and 10:")
 
-	for userNum != correctNum {
+	for userNum != correctNum && stop > 0 {
 
 		// Read user input
 		text, err := r.ReadString('\n')
@@ -35,7 +36,6 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-
 		userNum = textToInt
 
 		// Check if user obeyed the rules
@@ -55,5 +55,12 @@ func main() {
 			fmt.Printf("The number %v is out of bounds. Try again!! \n", textToInt)
 		}
 
+		stop--
+		if stop == 0 {
+			fmt.Println("You ran out of tries!")
+			break
+		}
+
+		fmt.Printf("You have %v more tries.\n", stop)
 	}
 }
